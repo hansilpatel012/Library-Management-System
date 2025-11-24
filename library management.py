@@ -40,13 +40,13 @@ class BookManager:
         }
         self.dm.data["books"].append(new_book)
         self.dm.save_data()
-        print(f"✅ Book '{title}' added successfully!")
+        print(f" Book '{title}' added successfully!")
 
     def list_books(self):
         if not self.dm.data["books"]:
             print("\nNo books in library.")
             return
-        print("\n--- 📚 Library Inventory ---")
+        print("\n---  Library Inventory ---")
         print(f"{'ID':<5} {'Title':<20} {'Author':<15} {'Avail':<5}")
         print("-" * 50)
         for b in self.dm.data["books"]:
@@ -64,11 +64,11 @@ class TransactionManager:
                 break
         
         if not book_found:
-            print("❌ Book not found.")
+            print(" Book not found.")
             return
 
         if book_found["available_copies"] <= 0:
-            print("❌ Error: All copies of this book are currently issued.")
+            print(" Error: All copies of this book are currently issued.")
             return
         book_found["available_copies"] -= 1
         issue_record = {
@@ -79,7 +79,7 @@ class TransactionManager:
         }
         self.dm.data["issued_books"].append(issue_record)
         self.dm.save_data()
-        print(f"✅ Book '{book_found['title']}' issued to {member_name}!")
+        print(f" Book '{book_found['title']}' issued to {member_name}!")
 
     def return_book(self, book_id, member_name):
         # Find issue record
@@ -91,21 +91,21 @@ class TransactionManager:
 
         if record_to_remove:
             self.dm.data["issued_books"].remove(record_to_remove)
-            # Increase availability
+            
             for b in self.dm.data["books"]:
                 if b["id"] == book_id:
                     b["available_copies"] += 1
                     break
             self.dm.save_data()
-            print(f"✅ Book returned successfully.")
+            print(f" Book returned successfully.")
         else:
-            print("❌ No matching issue record found.")
+            print(" No matching issue record found.")
 
     def admin_view_issued(self):
         if not self.dm.data["issued_books"]:
             print("No books are currently issued.")
             return
-        print("\n--- 🔐 Issued Books Report (Admin) ---")
+        print("\n---  Issued Books Report (Admin) ---")
         print(f"{'Book':<20} {'Member':<15} {'Date':<10}")
         print("-" * 50)
         for r in self.dm.data["issued_books"]:
@@ -117,7 +117,7 @@ def main():
     trans = TransactionManager(dm)
 
     while True:
-        print("\n=== 📚 LIBRARY MANAGEMENT SYSTEM ===")
+        print("\n===  LIBRARY MANAGEMENT SYSTEM ===")
         print("1. Add New Book")
         print("2. View All Books")
         print("3. Issue Book")
@@ -168,3 +168,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
